@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block title %}Marketplace — Accueil{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Aujourd'hui sur <span>Market</span></h1>
+</div>
+
+<div class="filters">
+  <a href="/" class="filter-chip {% if not request.args.get('statut') %}active{% endif %}">Tous</a>
+  <a href="?statut=nouveau" class="filter-chip {% if request.args.get('statut')=='nouveau' %}active{% endif %}">Nouveau</a>
+  <a href="?statut=occasion" class="filter-chip {% if request.args.get('statut')=='occasion' %}active{% endif %}">Occasion</a>
+  <a href="?statut=reconditionne" class="filter-chip {% if request.args.get('statut')=='reconditionne' %}active{% endif %}">Reconditionné</a>
+  <select class="sort-select">
+    <option>Trier : Récents</option>
+    <option>Prix croissant</option>
+    <option>Prix décroissant</option>
+  </select>
+</div>
+
+{% if produits %}
+<div class="products-grid">
+  {% for p in produits %}
+  <a class="product-card" href="/produit/{{ p.id }}">
+
+    <div class="card-img-wrapper">
+      {% if p.photo %}
+      <div class="card-img">
+        <img src="{{ url_for('static', filename='img/' + p.photo) }}" alt="{{ p.nom }}" loading="lazy"/>
+      </div>
+      {% else %}
+      <div class="card-img-placeholder">
+        📦
+      </div>
+      {% endif %}
+      <span class="card-badge">Nouveau</span>
+    </div>
+
+    <div class="card-body">
+      <div class="card-price">{{ "%.2f"|format(p.prix) }} €</div>
+      <div class="card-name">{{ p.nom }}</div>
+      <div class="card-location">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        Paris, France
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="empty-state">
+  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+    <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+    <path d="M16 3H8L6 7h12l-2-4z"/>
+  </svg>
+  <h2>Aucun produit trouvé</h2>
+  <p>Sois le premier à publier une annonce !</p>
+</div>
+{% endif %}
+
+{% endblock %}

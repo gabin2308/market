@@ -1,0 +1,25 @@
+<nav>
+  <a class="nav-logo" href="/">
+    <svg viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#4f8ef7" opacity=".15"/>
+      <path d="M8 22L14 10l4 8 3-5 3 9" stroke="#4f8ef7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="10" r="2" fill="#a78bfa"/>
+    </svg>
+    Market
+  </a>
+
+  <div class="nav-search">
+    <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="text" placeholder="Rechercher sur le Marketplace…"/>
+  </div>
+
+  <div class="nav-links">
+    <a href="/" class="{% if request.endpoint == 'index' %}active{% endif %}">Accueil</a>
+    <a href="{{url_for('vendre')}}">Vendre</a>
+    <a href="#">Mes annonces</a>
+    <a href="/" class="nav-btn">+ Publier</a>
+    <div class="nav-avatar">G</div>
+  </div>
+</nav>

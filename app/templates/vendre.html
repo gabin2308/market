@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+{% block title %}Publier une annonce — Market{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/vendre.css') }}"/>{% endblock %}
+
+{% block content %}
+
+<div class="sell-wrapper">
+
+  <!-- ── Colonne gauche : formulaire ── -->
+  <div class="sell-form-col">
+
+    <div class="sell-header">
+      <a class="back-link" href="/">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Retour
+      </a>
+      <h1>Publier une <span>annonce</span></h1>
+      <p>Remplis les informations ci-dessous pour mettre ton article en vente.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('vendre') }}" enctype="multipart/form-data" class="sell-form">
+
+      <!-- ── SECTION 1 : Photo ── -->
+      <div class="form-section">
+        <div class="form-section-label">
+          <span class="step-dot">1</span>
+          Photo
+        </div>
+
+        <div class="upload-zone">
+          <input type="file" name="photo" accept="image/*" class="upload-input"/>
+          <div class="upload-placeholder">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+            </svg>
+            <p>Clique pour choisir une photo</p>
+            <span>JPG, PNG, WEBP — max 5 Mo</span>
+          </div>
+          <img/>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2 : Infos ── -->
+      <div class="form-section">
+        <div class="form-section-label">
+          <span class="step-dot">2</span>
+          Informations
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="nom">Titre de l'annonce</label>
+            <input type="text" id="nom" name="nom" placeholder="Ex : iPhone 14 Pro 256Go" required/>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="prix">Prix (€)</label>
+              <div class="input-prefix">
+                <span>€</span>
+                <input type="number" id="prix" name="prix" placeholder="0.00" min="0" step="0.01" required/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="categorie">Catégorie</label>
+              <div class="select-wrap">
+                <select id="categorie" name="categorie" required>
+                  <option value="" disabled selected>Choisir…</option>
+                  <option value="electronique">Électronique</option>
+                  <option value="vetements">Vêtements</option>
+                  <option value="meubles">Meubles</option>
+                  <option value="vehicules">Véhicules</option>
+                  <option value="jeux">Jeux & Loisirs</option>
+                  <option value="autre">Autre</option>
+                </select>
+                <svg class="select-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="5"
+              placeholder="Décris l'état, les caractéristiques, les défauts éventuels…" required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3 : Etat ── -->
+      <div class="form-section">
+        <div class="form-section-label">
+          <span class="step-dot">3</span>
+          État de l'article
+        </div>
+
+        <div class="etat-grid">
+          <label class="etat-card">
+            <input type="radio" name="statut" value="nouveau" required/>
+            <div class="etat-content">
+              <span class="etat-icon">✨</span>
+              <strong>Neuf</strong>
+              <span>Jamais utilisé, emballage d'origine</span>
+            </div>
+          </label>
+          <label class="etat-card">
+            <input type="radio" name="statut" value="tres_bon"/>
+            <div class="etat-content">
+              <span class="etat-icon">👌</span>
+              <strong>Très bon</strong>
+              <span>Peu utilisé, aucun défaut visible</span>
+            </div>
+          </label>
+          <label class="etat-card">
+            <input type="radio" name="statut" value="bon"/>
+            <div class="etat-content">
+              <span class="etat-icon">👍</span>
+              <strong>Bon</strong>
+              <span>Quelques traces d'utilisation</span>
+            </div>
+          </label>
+          <label class="etat-card">
+            <input type="radio" name="statut" value="occasion"/>
+            <div class="etat-content">
+              <span class="etat-icon">🔧</span>
+              <strong>Occasion</strong>
+              <span>Défauts visibles, fonctionnel</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── Bouton submit ── -->
+      <button type="submit" class="btn-publish">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 4v16m8-8H4"/>
+        </svg>
+        Publier l'annonce
+      </button>
+
+    </form>
+  </div>
+
+      <div class="preview-tips">
+        <div class="tip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+          Une bonne photo augmente les chances de vendre.
+        </div>
+        <div class="tip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+          </svg>
+          Un titre précis attire plus d'acheteurs.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
